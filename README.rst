@@ -1,5 +1,5 @@
 dotMap - Realtime mapping using Django + Orbited + Twisted
-=========================================================
+==========================================================
 
 The experimental web application for testing plangraph-based dialogue management system based on Hotdot (http://github.com/clemesha/hotdot).
 
@@ -11,7 +11,7 @@ Dependencies
 - Overhearer: web service using DMLib
 
 Install & Usage
--------
+---------------
 #. install ``pip``::
 
     easy_install pip
