@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Log in{% endblock %}
+
+    {% block content %}
+
+    <div id="header" class="span-24 last"><h1>Log in</h1></div>
+
+    <div id="container" class="container"> 
+    {% if form.errors %}
+    <p class="error">Please correct the errors below:</p>
+    {% endif %}
+
+    <form method="post" action="?next={{ next|default:"/" }}">
+    {# Uncomment for Django 1.2+: {% csrf_token %} #}
+
+    <p>
+        <label for="id_username">Username:</label> {{ form.username }}
+        {% if form.username.errors %} <span class="error">{{ form.username.errors|join:", " }}</span>{% endif %}
+    </p>
+    <p>
+      <label for="id_password">Password:</label> {{ form.password }}
+      {% if form.password.errors %} <span class="error">{{ form.password.errors|join:", " }}</span>{% endif %}
+    </p>
+    <p class="submit"><input type="submit" value="Log In"></p>
+    </form>
+
+    <p>Don't have an account? <a href="/accounts/register/">Create an Account here</a>.</p>
+
+   </div><!-- end #container -->
+   {% endblock %}

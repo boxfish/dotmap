@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div id="header" class="span-24 last"><h1>Experiment for Collaborative Map Design</h1></div>
+	<div id="container" class="container"> 
+		<div id="dialogues-current" class="span-24 last dialogues">
+      		<h2>Current dialogues</h2>
+        	{% if current_dialogues %}
+        		{% for dialogue in current_dialogues %}
+					{% if user.is_authenticated %}
+            			<p><a href="/dialogues/{{ dialogue.guid }}">{{ dialogue.name }}</a></p>
+					{% else %}
+						<p>{{ dialogue.name }}</p>
+					{% endif %}
+          		{% endfor %}
+        	{% else %}
+            	<p>There are no ongoing dialogues.</p>
+            	{% if user.is_authenticated %}
+					<p><a href="/dialogues/new">Create a new dialogue!</a></p>
+				{% else %}
+		        	<p><a href="/accounts/login/">Login</a> or <a href="/accounts/register/">Sign up</a> to create a new dialogue!</p>
+				{% endif %}
+        	{% endif %}
+    	</div>
+  	</div><!-- end #container -->
+{% endblock %}

@@ -1,0 +1,7 @@
+*.pyc
+*.log
+*.log.*
+*.db
+*.pid
+.DS_Store
+TODO

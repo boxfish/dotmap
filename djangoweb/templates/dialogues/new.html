@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Create a New Dialogue{% endblock %}
+
+{% block content %}
+    
+  <div id="header" class="span-24 last"><h1>Create a New Dialogue!</h1></div>
+
+  <div id="container" class="container"> 
+
+    <div id="dialogues-new" class="span-24 dialogues">
+        <form action="" method="POST">
+        {% if dialogue_form.errors.extra %}
+            <p class="extra_errors">{{ dialogue_form.errors.extra }}</p>
+        {% endif %}
+			<div class="tip">Name:</div>
+            <div class="entry">{{ dialogue_form.name }}</div>
+            <div class="tip">Description:</div>
+			<div class="entry">{{ dialogue_form.description }}</div>
+        	<p> <input type="submit" value="Submit" /></p>
+        </form>
+    </div>
+
+  </div><!-- end #container -->
+
+{% endblock %}

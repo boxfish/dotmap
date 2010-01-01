@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <title>{% block title %}DotMap{% endblock %}</title>
+    <meta name="description" content="Realtime Voting - A complete Django-Orbited-Twisted example">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="/static/css/blueprint/screen.css" type="text/css" media="screen, projection">
+    <!--[if IE]><link rel="stylesheet" href="/static/css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+    <link rel="stylesheet" href="/static/css/main.css" type="text/css" media="screen, projection">
+    {% block extrahead %}{% endblock %}
+  </head>
+ <body>
+
+   {% if not user.is_anonymous %}
+    <ul id="nav">
+      <li>Welcome <b>{{ user }}</b>!</li><span>|</span>
+      <li><a href="/dialogues/new">Create a New Dialogue</a></li><span>|</span>
+      <li><a href="/">Home</a></li><span>|</span>
+      <li><a href="/accounts/logout/">Logout</a></li>
+    </ul>
+   {% else %}
+    <ul id="nav">
+      <li>Welcome!</li><span>|</span>
+      <li><a href="/accounts/login/">Login</a></li><span>|</span>
+      <li><a href="/accounts/register/">Sign up to create your own Dialogues</a></li>
+    </ul>
+   {% endif %}
+
+    <div id='container' class='container'>
+    {% block content %}{% endblock %}
+    </div>
+
+ </body>
+{% block extrafooter %}{% endblock %}
+</html>

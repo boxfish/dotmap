@@ -1,0 +1,55 @@
+#container{
+    text-align:center;
+}
+#header {
+    text-align:center;
+    margin:20px 0px;
+}
+ul#nav {
+    position:relative;
+    top:-15px;
+    text-align:right
+}
+ul#nav span {
+    font-size:11px;
+    color:#11138F;
+    padding:0px 2px 0px 6px;
+    position:relative;
+    top:0px;
+}
+ul#nav li {
+    display:inline;
+    text-decoration-none;
+}
+ul#nav li a {
+    color:#11138F;
+}
+#logout {
+    opacity:0.0;
+}
+.dialogues {
+    text-align:center;
+}
+
+#mapvis {
+	width: 450px;
+	height: 450px;
+}
+
+
+#dialogues-new {}
+#dialogues-new p {
+    font-size:200%;
+    margin:50px 0px 0px 0px;
+}
+#dialogues-new .tip {
+    font-size:150%;
+    color:#8f8f8f;
+    margin:8px 4px;
+}
+#dialogues-new div.entry input, textarea {
+    padding:4px;
+    width:80%;
+    font-size:150%;
+}
+
