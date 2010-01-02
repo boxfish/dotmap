@@ -15,8 +15,8 @@ from morbid import StompFactory
 # Config
 from orbited import logging, config
 logging.setup(config.map)
-#INTERFACE = "localhost"
-INTERFACE = "spatiallab.ist.psu.edu"
+INTERFACE = "localhost"
+#INTERFACE = "spatiallab.ist.psu.edu"
 #Runtime config, is there a cleaner way?:
 config.map["[access]"]={(INTERFACE, 9999):"*"}
 STATIC_PORT = 8000

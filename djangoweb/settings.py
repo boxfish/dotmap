@@ -2,8 +2,8 @@ import os
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 STATIC_PORT = 8000
 STOMP_PORT = 9999
-#INTERFACE = "localhost"
-INTERFACE = "spatiallab.ist.psu.edu"
+INTERFACE = "localhost"
+#INTERFACE = "spatiallab.ist.psu.edu"
 #DM_URL = "http://localhost:8080/dialogues" # the base url of dialogue manager service
 DM_URL = "http://spatiallab.ist.psu.edu:8080/dialogues"
 PROXY_HOST = "/proxy/?url=" # the proxy for remote resources

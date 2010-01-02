@@ -14,7 +14,7 @@ Install & Usage
 ---------------
 #. install ``pip``::
 
-    easy_install pip
+    sudo port install py26-pip
 
 #. Install dependencies::
     
@@ -31,7 +31,7 @@ Install & Usage
     twistd -ny server.py 
 
 - Now open browser to http://localhost:8000/
-- Also see config options in `server.py`.
+- Also see config options in `server.py` and `djangoweb/settings.py`.
 
 
 Details of how `dotMap` works
