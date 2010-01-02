@@ -15,8 +15,8 @@ from morbid import StompFactory
 # Config
 from orbited import logging, config
 logging.setup(config.map)
-INTERFACE = "localhost"
-#INTERFACE = "spatiallab.ist.psu.edu"
+#INTERFACE = "localhost"
+INTERFACE = "spatiallab.ist.psu.edu"
 #Runtime config, is there a cleaner way?:
 config.map["[access]"]={(INTERFACE, 9999):"*"}
 STATIC_PORT = 8000
@@ -48,7 +48,7 @@ proxy_factory = proxy.ProxyFactory()
 internet.GenericServer(cometsession.Port, factory=proxy_factory, resource=root_resource, childName="tcp", interface=INTERFACE).setServiceParent(serviceCollection)
 
 # Stomp server:
-stomp_factory = get_stomp_factory(INTERFACE)
+stomp_factory = get_stomp_factory("http://" + INTERFACE)
 internet.TCPServer(STOMP_PORT, stomp_factory, interface=INTERFACE).setServiceParent(serviceCollection)
 
 # RestQMessageProxy (message filter/logger/modifier):
