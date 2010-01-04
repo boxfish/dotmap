@@ -1,49 +1,51 @@
-var plangraph = null;
-var map = null;
+var dotpg = null;
+var dotmap = null;
 
-function map_handle_message(msg){
-    var choice = msg.choice;
-    var target = $("#votes_"+choice);
-    var current = Number(target.text())+1;
-    //console.log("vote_handle_message=> ", choice, current);
-    target.text(current);
+function chat_create_box(title) {
+    var html = "<div id='chatbox'>";
+    html += "<p id='chat_title'>"+title+"<span id='chat_close'>-</span><span id='chat_open'>^</span></p>";
+    html += "</div>";
+    $("#container").after(html);
+    chat_create_box_body();
+};
+
+function chat_create_box_body(){
+    var html = "<div id='chat_box_body'>";
+    html += "<div id='chat_text'></div>";
+    html += "<textarea id='chat_type_box'></textarea>";   
+    html += "</div>";
+    $("#chat_title").after(html);
 }
 
-function plangraph_handle_message(msg){
-    if (msg.from == USERNAME) return;
-    var choice = msg.choice;
-    var target = $("#pitch_"+choice+ " textarea");
-    switch(msg.event) {
-        case "focus":
-            break;
-            target.append($("<p>").attr("id", "active").text(msg.from+ " is typing..."));
-        case "keyup":
-            $("<p>").attr("id", "active").remove();
-            target.val(msg.content);
-            break;
-        default:
-            break;
-    }
+function chat_open_box(){
+    $("#chatbox").css("height", "300px");
+    $("#chat_box_body").show();
+}
+function chat_close_box(){
+    $("#chatbox").css("height", "20px");
+    $("#chat_box_body").hide();
 }
 
+function chat_add_message(from, text) {
+	var chatmsg = "<p class='chatmsg'><b>"+from+": </b>"+text+"</p>";
+    var chat_text = $("#chat_text");
+    chat_text.append(chatmsg);
+    chat_text.attr({scrollTop: chat_text.attr("scrollHeight")});
+}
 
 function handle_incoming_message(msg){
     switch(msg.type) {
-        case "map":
-            map_handle_message(msg);
-            break;
-        case "plangraph":
-            plangraph_handle_message(msg);
-            break;
         case "chat":
-            chat_handle_message(msg); //defined in 'chat.js' TODO: namespace better
+            chat_handle_message(msg); //defined in specific mode js files
             break;
+		case "select_map_resp":
+			map_slider_handle_message(msg);	// defined in mode_1.js
+			break;
         default:
             //console.log("Unhandled msg.type=> ", msg.type);
             break;
     }
 }
-
 
 function quit_handlers(client) {
     window.onbeforeunload = function() {
@@ -59,9 +61,9 @@ function quit_handlers(client) {
 }
 
 function onRequestPlanGraphSuccess(response) {
-	plangraph.clear();
-	plangraph.loadXML(response);
-	plangraph.draw();
+	dotpg.clear();
+	dotpg.loadXML(response);
+	dotpg.draw();
 };
 
 function requestPlanGraph() {
@@ -76,29 +78,38 @@ function requestPlanGraph() {
 
 function addControls() {
 	//map.addControl(new OpenLayers.Control.PanZoom());
-	map.addControl(new OpenLayers.Control.LayerSwitcher());
+	dotmap.addControl(new OpenLayers.Control.LayerSwitcher());
 	//map.addControl(new OpenLayers.Control.MousePosition());
-	map.addControl(new OpenLayers.Control.PanZoomBar());
-	map.addControl(new OpenLayers.Control.ScaleLine());
+	dotmap.addControl(new OpenLayers.Control.PanZoomBar());
+	dotmap.addControl(new OpenLayers.Control.ScaleLine());
 };
 
 function onRequestMapSuccess(response) {
-	map.destroy();
-	map = wmcParser.read(response, {map: 'mapvis'});
+	dotmap.destroy();
+	dotmap = wmcParser.read(response, {map: 'mapvis'});
 	addControls();
 };
 
-var requestMap = function() {
-	var url = "/dialogues/" + CHANNEL_ID + "/map";
-	$.ajax({
-		type: "GET",
-		url: url,
-		dataType: "xml",
-		success: onRequestMapSuccess
-	});
+function onRequestTextSuccess(response) {
+	from = "SYSTEM";
+	chat_add_message(from, response);
 };
 
+function requestResponseContent (response) {
+	var url = "/dialogues/" + CHANNEL_ID + "/responses/" + response.id;
+	if (response.type == "map") {
+		$.ajax({ type: "GET", url: url, dataType: "xml", success: onRequestMapSuccess});
+	}
+	else if (response.type == "text") {
+		$.ajax({ type: "GET", url: url, dataType: "text", success: onRequestTextSuccess});
+	}
+	// more...
+}
+
 $(document).ready(function(){
+	/***********************************
+	// STOMP client initiation
+	***********************************/
     client = new STOMPClient();
     client.onopen = function() { 
         quit_handlers(client);
@@ -203,7 +214,7 @@ $(document).ready(function(){
 			
 		}	
 	};
-	plangraph = new PlanGraph('pgvis', pgSettings, pgStyles);
+	dotpg = new PlanGraph('pgvis', pgSettings, pgStyles);
 	/**********************************
 	// Map Initialization
 	***********************************/
@@ -216,8 +227,25 @@ $(document).ready(function(){
 		//maxExtent: OpenLayers.Bounds.fromString('-8679157,4971158.57086,-8655805.51884,4993707.49420')
 		maxExtent: new OpenLayers.Bounds(-130, 14, -60, 55)
 	};
-	map = new OpenLayers.Map('mapvis', mapSettings);
+	dotmap = new OpenLayers.Map('mapvis', mapSettings);
 	wmcParser = new OpenLayers.Format.WMC({'layerOptions': {buffer: 0}, 'version':'1.1.0.ex'});
+	
+	/**********************************
+	// Chat Initialization
+	***********************************/
+	chat_create_box("Dialogue");
+    $("#chat_open").click(chat_open_box);
+    $("#chat_close").click(chat_close_box);
+	if (isParticipating == "True") {
+		// read only if not participating...
+		$("#chat_type_box").attr("disabled", false);
+		$("#chat_type_box").keydown(chat_handle_typing);
+	}
+	else {
+		// read only if not participating...
+		$("#chat_type_box").attr("disabled", true);
+	}
+	
 	
 });
 

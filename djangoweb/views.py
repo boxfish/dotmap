@@ -29,10 +29,15 @@ def index(request):
 
 def proxy(request):
   """http proxy for external resources"""
+  f = None
   if request.method == "GET":
     url = request.GET["url"]
-    return HttpResponse(urllib2.urlopen(url).read())
+    f = urllib2.urlopen(url)
   elif request.method == "POST":
     url = request.POST["url"]
     data = urllib.urlencode(request.POST)
-    return HttpResponse(urllib2.urlopen(url, data).read())
+    f = urllib2.urlopen(url, data)
+  response = f.read()
+  content_type = f.info()['Content-Type']
+  f.close()
+  return HttpResponse(response, content_type=content_type)        

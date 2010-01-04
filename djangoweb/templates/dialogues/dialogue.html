@@ -20,9 +20,17 @@
         STOMP_PORT = {{ STOMP_PORT }};
         USERNAME = "{{ user }}";
 		SESSION_COOKIE_NAME = "{{ SESSION_COOKIE_NAME }}"; 
-		OpenLayers.ProxyHost = "{{ PROXY_HOST }}"
+		OpenLayers.ProxyHost = "{{ PROXY_HOST }}";
+		isParticipating = "{{ isParticipating }}";
     </script>
 	<script type="text/javascript" src="/static/js/main.js"></script>
+	<script type="text/javascript" src="/static/js/mode_{{ MODE }}.js"></script>
+	{% ifequal MODE "1" %}
+	<link rel="stylesheet" href="/static/css/colorbox.css" type="text/css" media="screen" charset="utf-8">
+	<link rel="stylesheet" href="/static/css/slider.css" type="text/css" media="screen" charset="utf-8">
+	<script src="/static/js/jquery.colorbox-min.js" type="text/javascript" charset="utf-8"></script>
+	{% endifequal %}
+	
 {% endblock %}
 
 {% block content %}
@@ -41,9 +49,3 @@
 
 {% endblock %}
 
-{% block extrafooter %}
-    {% ifequal isParticipating "True" %}
-	<link rel="stylesheet" href="/static/chat/chat.css" type="text/css" />
-    <script type="text/javascript" src="/static/chat/chat.js"></script>
-	{% endifequal %}
-{% endblock %}

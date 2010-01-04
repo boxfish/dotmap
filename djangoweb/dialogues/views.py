@@ -29,16 +29,18 @@ def plangraph(request, guid):
   url = settings.DM_URL + "/" + guid + "/plangraph/"
   f = urllib2.urlopen(url)
   response = f.read()
+  content_type = f.info()['Content-Type']
   f.close()
-  return HttpResponse(response, mimetype="text/xml")        
+  return HttpResponse(response, content_type=content_type)        
 
 @login_required
-def map(request, guid):
-  url = settings.DM_URL + "/" + guid + "/map/"
+def response(request, guid, responderId):
+  url = settings.DM_URL + "/" + guid + "/responses/" + responderId
   f = urllib2.urlopen(url)
   response = f.read()
+  content_type = f.info()['Content-Type']
   f.close()
-  return HttpResponse(response, mimetype="text/xml")        
+  return HttpResponse(response, content_type=content_type)        
 
 @login_required
 def join(request, guid):
@@ -78,7 +80,7 @@ def dialogue(request, guid):
     dialogue.participants.get(username__exact=request.user.username)
   except User.DoesNotExist:
     isParticipating = "False"
-  args = {"dialogue":dialogue, "user":request.user, "isParticipating": isParticipating, "PROXY_HOST": settings.PROXY_HOST, "STOMP_PORT":settings.STOMP_PORT, "HOST":settings.INTERFACE, "SESSION_COOKIE_NAME":settings.SESSION_COOKIE_NAME}
+  args = {"dialogue":dialogue, "user":request.user, "isParticipating": isParticipating, "PROXY_HOST": settings.PROXY_HOST, "MODE": settings.MODE, "STOMP_PORT":settings.STOMP_PORT, "HOST":settings.INTERFACE, "SESSION_COOKIE_NAME":settings.SESSION_COOKIE_NAME}
   return render_to_response('dialogues/dialogue.html', args)
   
 @login_required  
@@ -112,3 +114,18 @@ def new(request):
   args = {"dialogue_form":dialogue_form, "user":request.user}
   return render_to_response("dialogues/new.html", args)
 
+@login_required
+def maplist(request, guid):
+  url = settings.DM_URL + "/" + guid + "/responses/"
+  f = urllib2.urlopen(url)
+  responses = json.loads(f.read())
+  f.close()
+  maplist = []
+  if type(responses) == list:
+    for response in responses:
+      if response["type"] == "map":
+        maplist.append(response)
+  """show the maplist slideshow"""
+  args = {"maplist":maplist}
+  return render_to_response('dialogues/maplist.html', args)
+  

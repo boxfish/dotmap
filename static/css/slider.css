@@ -1,0 +1,93 @@
+#mapslider {
+    width: 800px;
+    margin: 0 auto;
+    position: relative;
+	border: 10px solid #ccc;
+}
+
+#mapslider .scroll {
+	overflow: hidden;
+	width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+#mapslider .scrollContainer {
+	position: relative;
+}
+
+#mapslider .scrollContainer .mappanel {
+    padding: 10px;
+    width: 274px;
+	height: 350px;
+}
+
+#left-shadow {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 12px;
+	bottom: 0;
+	background: url(../images/leftshadow.png) repeat-y;
+}
+
+#right-shadow {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 12px;
+	bottom: 0;
+	background: url(../images/rightshadow.png) repeat-y;
+}
+
+#mapslider .inside {
+	padding: 10px;
+	border: 1px solid #999;
+}
+
+#mapslider .inside img {
+	display: block;
+	border: 1px solid #666;
+	margin: 0 0 10px 0;
+	width: 250px;
+}
+
+#mapslider .inside h2 {
+	font-weight: normal;
+	color: #111;
+	font-size: 16px;
+	margin: 0 0 8px 0;
+}
+
+#mapslider .inside p {
+	font-size: 11px;
+	color: #ccc;
+}
+
+#mapslider a {
+	color: #999;
+	text-decoration: none;
+	border-bottom: 1px dotted #ccc;
+}
+
+#mapslider a:hover {
+	border-bottom: 1px solid #999;
+}
+
+#mapslider .scrollButtons {
+    position: absolute;
+    top: 127px;
+    cursor: pointer;
+}
+
+#mapslider .scrollButtons.left {
+    left: -45px;
+}
+
+#mapslider .scrollButtons.right {
+    right: -45px;
+}
+
+#mapslider .hide {
+    display: none;
+}

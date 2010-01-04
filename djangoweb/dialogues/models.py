@@ -19,4 +19,15 @@ class Message(models.Model):
   created_time = models.DateTimeField(auto_now_add=True)
   author = models.ForeignKey(User, related_name="message_authored") #User who created the message
   pgxml = models.TextField()
-  mapxml = models.TextField()    
+  selected_respId = models.CharField(max_length=10)   
+  
+class Response(models.Model):
+  respId = models.CharField(max_length=10)
+  message = models.ForeignKey(Message, related_name="responses_generated") 
+  type = models.CharField(max_length=10)
+  created_time = models.DateTimeField(auto_now_add=True)
+  preview = models.TextField()
+  explanation = models.TextField()
+  content = models.TextField()
+  
+  
