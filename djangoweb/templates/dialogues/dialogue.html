@@ -3,6 +3,7 @@
 {% block extrahead %}
     <script type="text/javascript" src="/static/js/jquery-1.3.2.min.js"></script>
     <script type="text/javascript" src="/static/js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.pulse.js"></script>
     <script type="text/javascript" src="/static/js/Orbited.js"></script>
     <script type="text/javascript" src="/static/js/JSON.js"></script>
     <script type="text/javascript" src="/static/js/protocols/stomp/stomp.js"></script>
@@ -19,9 +20,9 @@
         HOST = "{{ HOST }}";
         STOMP_PORT = {{ STOMP_PORT }};
         USERNAME = "{{ user }}";
-		SESSION_COOKIE_NAME = "{{ SESSION_COOKIE_NAME }}"; 
-		OpenLayers.ProxyHost = "{{ PROXY_HOST }}";
-		isParticipating = "{{ isParticipating }}";
+		    SESSION_COOKIE_NAME = "{{ SESSION_COOKIE_NAME }}"; 
+		    OpenLayers.ProxyHost = "{{ PROXY_HOST }}";
+		    isParticipating = "{{ isParticipating }}";
     </script>
 	<script type="text/javascript" src="/static/js/main.js"></script>
 	<script type="text/javascript" src="/static/js/mode_{{ MODE }}.js"></script>
@@ -35,16 +36,26 @@
 
 {% block content %}
 <div id="container" class="container"> 
- 	<h1 id="dialoguename">Dialogue: <i>{{ dialogue.name }}</i></h1><br><br>
-    <div class="span-12">
-      <div id="pgvis"></div>
-    </div>
-	<div class="span-12 last">
-      <div id="mapvis"></div>
-    </div>
+ 	<h1 id="dialoguename">Dialogue: <i>{{ dialogue.name }}</i></h1>
+  <div class="span-12" id="pub_mapvis_panel">
+      <div id="pub_mapvis_title" class="panel_title">Shared Map</div>
+      <div id="pub_mapvis_toolbar" class="panel_toolbar">
+        <a href="#" id="get_prev_response">< Prev</a>
+        <a href="#" id="get_next_response">Next ></a>
+        <a href="#" id="merge_to_pri">Merge to Individual =></a>
+      </div>
+      <div id="pub_mapvis"></div>
+  </div>
+  <div class="span-12 last" id="pri_mapvis_panel">
+      <div id="pri_mapvis_title" class="panel_title">Individual Map</div>
+      <div id="pub_mapvis_toolbar" class="panel_toolbar">
+        <a href="#" id="share_to_pub"><= Share with others</a>
+      </div>
+      <div id="pri_mapvis"></div>
+  </div>
 </div>
 {% ifequal isParticipating "False" %}
-<h2><a href="/dialogues/{{ dialogue.guid }}/join">Join this dialogue</a></h2>
+<h2><a href="/dialogues/{{ dialogue.guid }}/join/">Join this dialogue</a></h2>
 {% endifequal %}
 
 {% endblock %}

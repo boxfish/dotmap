@@ -9,8 +9,8 @@
 			<div class="mappanel" id="panel_{{ forloop.counter }}">
 				<div class="inside">
 					<img src="{{ map.preview }}" alt="picture" />
-					<h2 class="respId">{{ map.id }}</h2>
-					<p>{{ map.explanation }}</p>
+					<span class="map_id">{{ map.id }}</span>
+					<div class="map_exp">{{ map.explanation|safe }}</div>
 				</div>
 			</div>
     		{% endfor %}
@@ -20,6 +20,7 @@
 	</div>
 	<img class="scrollButtons right" src="/static/images/rightarrow.png">
 </div>
+<div id="curr_exp"></div>
 {% else %}
 <p>There are no candidate maps.</p>
 {% endif %}

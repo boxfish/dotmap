@@ -3,13 +3,13 @@ function slider_returnToNormal(element) {
 		.toggleClass("selected")
 		.animate({ width: $("#mapslider").data("regWidth")})
 		.find("img")
-		.animate({ width: $("#mapslider").data("regImgWidth") })
-	    .end()
-		.find("h2")
-		.animate({ fontSize: $("#mapslider").data("regTitleSize") })
-		.end()
-		.find("p")
-		.animate({ fontSize: $("#mapslider").data("regParSize") });
+		.animate({ width: $("#mapslider").data("regImgWidth") });
+	    //.end()
+		//.find("h2")
+		//.animate({ fontSize: $("#mapslider").data("regTitleSize") })
+		//.end()
+		//.find("p")
+		//.animate({ fontSize: $("#mapslider").data("regParSize") });
 };
 
 function slider_growBigger(element) {
@@ -17,13 +17,14 @@ function slider_growBigger(element) {
 		.toggleClass("selected")
 		.animate({ width: $("#mapslider").data("curWidth")})
 		.find("img")
-		.animate({ width: $("#mapslider").data("curImgWidth") })
-	    .end()
-		.find("h2")
-		.animate({ fontSize: $("#mapslider").data("curTitleSize") })
-		.end()
-		.find("p")
-		.animate({ fontSize: $("#mapslider").data("curParSize") });
+		.animate({ width: $("#mapslider").data("curImgWidth") });
+	    //.end()
+		//.find("h2")
+		//.animate({ fontSize: $("#mapslider").data("curTitleSize") })
+		//.end()
+		//.find("p")
+		//.animate({ fontSize: $("#mapslider").data("curParSize") });
+	$("#curr_exp").empty().append($(element).find(".map_exp").html());	
 }
 
 //direction true = right, false = left
@@ -80,15 +81,15 @@ $(document).ready(function(){
 	
 	$("#mapslider").data("regWidth", $("#mapslider .mappanel").css("width"));
 	$("#mapslider").data("regImgWidth", $("#mapslider .mappanel img").css("width"));
-	$("#mapslider").data("regTitleSize", $("#mapslider .mappanel h2").css("font-size"));
-	$("#mapslider").data("regParSize", $("#mapslider .mappanel p").css("font-size"));
+	//$("#mapslider").data("regTitleSize", $("#mapslider .mappanel h2").css("font-size"));
+	//$("#mapslider").data("regParSize", $("#mapslider .mappanel p").css("font-size"));
 	
-	$("#mapslider").data("curWidth", 350);
-	$("#mapslider").data("curImgWidth", 326);
-	$("#mapslider").data("curTitleSize", "20px");
-	$("#mapslider").data("curParSize", "15px");
+	$("#mapslider").data("curWidth", 424);
+	$("#mapslider").data("curImgWidth", 424);
+	//$("#mapslider").data("curTitleSize", "20px");
+	//$("#mapslider").data("curParSize", "15px");
 	
-	$("#mapslider").data("movingDistance", 300);
+	$("#mapslider").data("movingDistance", 369);
 	
 	var $panels				= $('#mapslider .scrollContainer > div');
 	var $container			= $('#mapslider .scrollContainer');
@@ -98,7 +99,7 @@ $(document).ready(function(){
 	$("#mapslider").data("currentlyMoving", false);
 
 	$container
-		.css('width', ($panels[0].offsetWidth * $panels.length) + 100 )
+		.css('width', ($panels[0].offsetWidth * $panels.length) + 150 )
 		.css('left', $("#mapslider").data("curWidth") * 0.5);
 
 	var scroll = $('#mapslider .scroll').css('overflow', 'hidden');

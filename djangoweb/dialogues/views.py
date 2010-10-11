@@ -34,13 +34,56 @@ def plangraph(request, guid):
   return HttpResponse(response, content_type=content_type)        
 
 @login_required
-def response(request, guid, responderId):
-  url = settings.DM_URL + "/" + guid + "/responses/" + responderId
+def messages(request, guid):
+  url = settings.DM_URL + "/" + guid + "/messages/"
   f = urllib2.urlopen(url)
   response = f.read()
   content_type = f.info()['Content-Type']
   f.close()
   return HttpResponse(response, content_type=content_type)        
+
+@login_required
+def responses(request, guid):
+  url = settings.DM_URL + "/" + guid + "/responses/"
+  f = urllib2.urlopen(url)
+  result = json.loads(f.read())
+  content_type = f.info()['Content-Type']
+  f.close()
+  response = None
+  if type(result) == list:  
+    response = []
+    if settings.MODE == "0":
+      response = result
+    elif settings.MODE == "1":
+      # only the selected response will be added
+      dlg = Dialogue.objects.get(guid=guid)
+      latest_msg = dlg.message_included.order_by('-created_time')[0]
+      print latest_msg
+      for resp in result:
+        print latest_msg.selected_respId
+        if latest_msg.selected_respId and latest_msg.selected_respId == str(resp["id"]):
+          response.append(resp)    
+  elif result.has_key("status") and result["status"] == "error":
+    response = {}
+    response["status"] = result["status"]
+    response["message"] = result["message"]
+  return HttpResponse(json.dumps(response), content_type=content_type)        
+
+@login_required
+def response(request, guid, responderId):
+  if int(responderId) < 0:
+    print "TESTTEST"
+    dlg = Dialogue.objects.get(guid=guid)
+    msg = dlg.message_included.order_by('-created_time')[-int(responderId):-int(responderId)+1][0]
+
+    response = msg.responses_generated.get(respId=msg.selected_respId).content
+  else:
+    url = settings.DM_URL + "/" + guid + "/responses/" + responderId + "/"
+    f = urllib2.urlopen(url)
+    response = f.read()
+    content_type = f.info()['Content-Type']
+    f.close()
+  return HttpResponse(response, content_type='text/xml')        
 
 @login_required
 def join(request, guid):

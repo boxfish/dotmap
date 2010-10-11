@@ -80,6 +80,14 @@ OpenLayers.Format.WMC.v1_1_0_ex = OpenLayers.Class(
 	            options
 	        );
 		}
+		else if (layerInfo.service.indexOf('XYZ') === 0) {
+			layer = new OpenLayers.Layer.XYZ(
+				layerInfo.title,
+				layerInfo.href,
+            	options
+           );
+		}
+
 		else if (layerInfo.service.indexOf('OSM:') === 0) {
 			var type = layerInfo.service.split(':')[1];
 			layer = new OpenLayers.Layer.OSM[type](
@@ -191,6 +199,13 @@ OpenLayers.Format.WMC.v1_1_0_ex = OpenLayers.Class(
         this.runChildNodes(layerInfo, node);
     },
 	
+	/**
+     * Method: read_ol_sphericalMercator
+     */
+    read_ol_sphericalMercator: function(layerInfo, node) {
+        layerInfo.options.sphericalMercator = (this.getChildValue(node) == "true");
+    },
+
 	/**
      * Method: write_wmc_LayerList
      * Create a LayerList node given an context object.

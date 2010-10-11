@@ -19,7 +19,7 @@
 #mapslider .scrollContainer .mappanel {
     padding: 10px;
     width: 274px;
-	height: 350px;
+	height: 424px;
 }
 
 #left-shadow {
@@ -41,8 +41,8 @@
 }
 
 #mapslider .inside {
-	padding: 10px;
-	border: 1px solid #999;
+	padding: 0px;
+	border: 0px solid #999;
 }
 
 #mapslider .inside img {
@@ -90,4 +90,25 @@
 
 #mapslider .hide {
     display: none;
+}
+
+.map_exp {
+    display: none;
+}
+.map_id {
+    position: relative;
+    top: -50px;
+    left: 20px;
+    font-weight: bold;
+    color: #111;
+	font-size: 20px;
+}
+.explanation .task_name {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.explanation .task_list {
+    font-style: italic;
+    font-size: 16px;
 }

@@ -25,6 +25,15 @@ def index(request):
     dialogue_list = json.loads(data)
     current_dialogues = Dialogue.objects.filter(guid__in=dialogue_list)
     args = {"current_dialogues":current_dialogues, "user":request.user}
+    # get the dialogues that the user has participated
+    if request.user.is_authenticated():
+        url = settings.DM_URL + "/?user_id=%s" % request.user.username
+        f = urllib2.urlopen(url)
+        data = f.read()
+        dialogue_list = json.loads(data)
+        if type(dialogue_list) == list:
+            participated_dialogues = Dialogue.objects.filter(guid__in=dialogue_list)
+            args["participated_dialogues"] = participated_dialogues
     return render_to_response("index.html", args)
 
 def proxy(request):

@@ -97,7 +97,7 @@ def _handle_chat(msg, username, channel_id):
       if resp.has_key("explanation"):
         response.explanation = resp["explanation"]
       # get the content of the response
-      url = settings.DM_URL + "/" + channel_id + "/responses/" + resp["id"]
+      url = settings.DM_URL + "/" + channel_id + "/responses/" + resp["id"] + "/"
       f = urllib2.urlopen(url)
       response.content = str(f.read())
       response.save()

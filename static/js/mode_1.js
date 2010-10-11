@@ -47,7 +47,7 @@ function chat_handle_message(msg){
 };
 
 function map_slider_handle_closing() {
-	respId = $('#mapslider .selected .respId').text();
+	respId = $('#mapslider .selected .map_id').text();
 	map_slider_send_message(respId);
 };
 
@@ -76,7 +76,7 @@ function open_standby_box(from) {
 
 
 function open_map_slider() {
-	$.fn.colorbox({html: false, href:"/dialogues/"+CHANNEL_ID+"/maplist", innerWidth: "890px", close: "SELECT", overlayClose: false, onCleanup: map_slider_handle_closing});
+	$.fn.colorbox({html: false, href:"/dialogues/"+CHANNEL_ID+"/maplist/", innerWidth: "890px", close: "SELECT", overlayClose: false, onCleanup: map_slider_handle_closing});
 };
 
 
